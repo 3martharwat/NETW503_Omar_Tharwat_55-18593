@@ -1,19 +1,13 @@
 import socket
-import select
-import sys
-client_socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-port=5618
-client_socket.connect(('172.20.10.3',port)) 
-while True:
+client_socket=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+port = 1501
+client_socket.connect(('127.0.0.1',port))
+while True :
  message=input("enter your message: ")
- if message!="CLOSE SOCKET":
-    msg=message.encode('utf-8')
-    client_socket.send(msg)
-    msg=client_socket.recv(1024)
-    message =msg.decode('utf-8')
-    print(message)
- else:
-  client_socket.close()
-
- 
+ client_socket.send(bytes(message,'utf-8'))
+ server_msg=client_socket.recv(1024)
+ print(server_msg.decode('utf-8'))
+ if message=="CLOSE SOCKET":
+   client_socket.close()
+   break
 
